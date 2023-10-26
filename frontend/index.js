@@ -29,6 +29,7 @@ const messageContainer = document.getElementById('message-container')
 
 const messageInput = document.getElementById('message-input')
 
+const viewScore = document.getElementById('score')
 
 
 let userId;
@@ -148,7 +149,7 @@ function reset() {
 
 
 messageForm.addEventListener('submit', e => {
-  console.log( messageInput.value)
+  // console.log( messageInput.value)
   e.preventDefault()
   const message = messageInput.value
   appendMessage(`You: ${message}`)
@@ -191,7 +192,7 @@ function appendMessage(message) {
 
 
 function newGame() {
-  console.log(newPlyName.value)
+  // console.log(newPlyName.value)
   socket.emit('newGame', newPlyName.value);
   init();
 }
@@ -199,7 +200,7 @@ function newGame() {
 
 
 function handleGameCode(gameCode, userCode) {
-  console.log('gameCode', gameCode, 'userCode', userCode)
+  // console.log('gameCode', gameCode, 'userCode', userCode)
   roomName = gameCode
   userId = userCode
   gameCodeDisplay.innerText = gameCode;
@@ -214,7 +215,7 @@ function handleGameCode(gameCode, userCode) {
 
 
 socket.on('someone-lost', data => {
-  console.log(data, 'dream')
+  // console.log(data, 'dream')
   if (userId > data.userId) {
     userId = userId - 1
   }
@@ -228,6 +229,19 @@ socket.on('you-win', data => {
   // alert('you win')
 })
 
+
+
+socket.on('seq-added', data => {
+
+  playSound(colors[data[data.length - 1]])
+  seq = [3, ...data]
+  if (seq.length % 2 + 1 != Number(userId)) {
+
+    overlay.classList.remove('no-click')
+
+  }
+  console.log(seq, 'seq from wildcard', seq.length % 2 + 1 == Number(userId))
+})
 
 //socket listernser --socket listernser --socket listernser --socket listernser --socket listernser --socket listernser --socket listernser --socket listernser --socket listernser --
 
@@ -253,12 +267,13 @@ colors.forEach(color => {
 
     // }
 
-    console.log(seq.length % 2 + 1, 'wild')
+    // console.log(seq.length % 2 + 1, 'wild')
     userClickedPattern.push(colors.indexOf(color));
-    console.log(userClickedPattern, 'this is userClickedPattern')
-    console.log(seq, 'this is seq')
+    // console.log(userClickedPattern, 'this is userClickedPattern')
+    // console.log(seq, 'this is seq')
     playSound(color);
 
+    console.log(userClickedPattern.length, seq.length,userClickedPattern.length > seq.length, 'userClickedPattern.length > seq.length')
 
     if (userClickedPattern.length > seq.length) {
 
@@ -268,7 +283,7 @@ colors.forEach(color => {
         overlay.classList.remove('no-click')
 
       }
-      console.log('adding to socket.........,', seq.length % 2 + 1 != userId)
+      // console.log('adding to socket.........,', seq.length % 2 + 1 != userId)
       socket.emit('add-seq', roomName, colors.indexOf(color))
       userClickedPattern = []
     } else {
@@ -291,11 +306,10 @@ function checkAnswer(currentLevel) {
     if (userClickedPattern.length === seq.length) {
 
 
+      // console.log(viewScore.textContent, viewScore.innerText,'pass', 'nad')
       //pass
-      score = score + 100
-      viewScore.innerText = score
-
-      console.log('pass')
+      viewScore.textContent = Number(viewScore.textContent) +100
+        
     }
   } else {
     // fail

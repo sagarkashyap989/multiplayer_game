@@ -15,6 +15,48 @@ io.on('connection', client => {
     client.to(room).broadcast.emit('chat-message', { message: message, name: rooms[room].users[client.id] })
   })
 
+  //new-listners--new-listners--new-listners--new-listners--new-listners--new-listners--new-listners--new-listners
+  client.on('won-lost',(room, userId) => {
+
+    console.log(rooms)
+    console.log(room, userId, 'won-lost')
+    client.to(room).broadcast.emit('someone-lost', { message: 'lost', name: rooms[room].users[client.id] , userId })
+    delete rooms[room].users[client.id]
+    client.leave(room)
+    const roo1m = io.sockets.adapter.rooms[room];
+    console.log(roo1m, 'roo1m')
+    const numberOfUsers = roo1m ? roo1m.length : 0;
+    if(numberOfUsers == 1){
+      client.to(room).broadcast.emit('you-win')
+
+    }
+  })
+
+
+
+  client.on('add-seq', (room, seq) => {
+    // console.log( rooms[room])
+    // console.log(room, seq)
+    rooms[room].sequence.push(seq)
+
+    console.log(rooms)
+    client.to(room).broadcast.emit('seq-added',rooms[room].sequence )
+  })
+  client.on('del-seq', (room) => {
+    // console.log( rooms[room])
+    // console.log(room, seq)
+    rooms[room].sequence = []
+
+  })
+
+
+  //new-listners--new-listners--new-listners--new-listners--new-listners--new-listners--new-listners--new-listners
+
+
+
+
+
+
 
 
   function handleJoinGame(room, name) {

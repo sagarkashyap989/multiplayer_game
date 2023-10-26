@@ -17,7 +17,7 @@ body {
   padding: 0;
 }
 .background{
-  /* background-image: url("ts.gif"); */
+  background-image: url("ts.gif");
 
     /* background-image: url("darksky.jpg"); */
   background-size:100%;
@@ -566,5 +566,16 @@ HTML CSSResult Skip Results Iframe
 
 
 .no-click{
-  pointer-events: none
+  pointer-events: none;
+  background: #dd080892;
+}
+
+
+
+.you-win{
+  background-color: green;
+}
+
+.lost-title{
+  color:red
 }
