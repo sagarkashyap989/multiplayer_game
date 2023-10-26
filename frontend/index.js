@@ -304,7 +304,7 @@ function checkAnswer(currentLevel) {
 
   if (seq[currentLevel] === userClickedPattern[currentLevel]) {
     if (userClickedPattern.length === seq.length) {
-
+      console.log(viewScore.textContent , 'viewScore.textContent ')
 
       // console.log(viewScore.textContent, viewScore.innerText,'pass', 'nad')
       //pass

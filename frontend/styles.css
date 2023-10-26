@@ -3,9 +3,8 @@
 
 .btn {
   text-align:center;
-
-  height: 90px;
-  width:90px;
+  width: 197.9px !important;
+  height: 200px !important;
   border-radius:20px;
 }
 
@@ -17,7 +16,8 @@ body {
   padding: 0;
 }
 .background{
-  background-image: url("ts.gif");
+  /* background-image: url("ts.gif"); */
+  height:100vh;
 
     /* background-image: url("darksky.jpg"); */
   background-size:100%;
@@ -49,11 +49,12 @@ margin-top: 8px;
 
 
 .container {
-  display: block;
+    display: block;
   width: 100%;
-margin-top: 10px;
-padding-top: 0px;
+  margin-top: 10px;
+  padding-top: 0px;
 }
+
 
 
 

@@ -4,8 +4,8 @@
 <head>
   <meta charset="UTF-8">
   <title>MultiPlayer Snake</title>
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
-    integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+  <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+    integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous"> -->
   <link rel="stylesheet" href="styles.css">
   <style>
     #gameScreen {
@@ -21,11 +21,16 @@
 
     #message-container {
       border: 1px solid;
-      padding: 7px;
-      height: 206px;
-      overflow-y: scroll;
-      width: 100%;
-      background-color: #3b3a3aa6;
+  padding: 7px;
+  height: 276px;
+  overflow-y: scroll;
+  width: 100%;
+  background-color: #3b3a3aa6;
+
+    }
+
+    #message-container div {
+      font-size: 37px;
     }
 
     #message-container div {
@@ -46,16 +51,18 @@
 
     .form-wrapper {
       display: flex;
-      align-items: center;
-      flex-direction: column;
-      justify-content: space-evenly;
-      padding-inline: 46px;
+  align-items: center;
+  flex-direction: column;
+  justify-content: space-evenly;
+  padding-inline: 46px;
+  width: 60%;
     }
 
-    .form-btns {
-      display: flex;
-      justify-content: center;
-    }
+    .form-btns  { display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+}
 
     @media only screen and (max-width: 800px) {
       .form-btns {
@@ -77,20 +84,41 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      width: 198px;
+      /* width: 198px; */
       color: green
     }
+#score{
+  font-size: 132px;
+  font-weight: 700;
+  margin: 0;
+}
+    
+          .main-btns {
+            
+  width: 100%;
+          }
 
 
 
-
-    @media (max-width: 790px) {
+    @media (mix-width: 790px) {
       .form-btns {
         flex-direction: column;
       }
     }
 
     /* @media (min-width: 400px) {
+
+      .main-btns {
+        width: 30vw;
+      }
+
+      .main-btns {
+        width: 30vw;
+      }
+
+      .main-btns {
+        width: 30vw;
+      }
 
       .main-btns {
         width: 30vw;
@@ -105,97 +133,100 @@
 
       } */
 
-      .gameCodeDisplay{
+      .gameCodeDispla{
         color:white;
+      }
+      .p-10{
+        padding:10px
+      }
+      #send-container{
+        margin-top: 30px;
       }
   </style>
 </head>
 
 <body>
-  <section class="vh-100">
-    <div class="container h-100">
+  <div>
 
-      <div id="initialScreen" class="h-100">
-        <div class="d-flex flex-column align-items-center justify-content-center h-100">
-          <h1>Multiplayer Snake</h1>
-          <input type="text" placeholder="Enter your name" id="playerNameS" />
-          <button type="submit" class="btn btn-success" id="newGameButton">
-            Create New Game
-          </button>
-          <div>OR</div>
-          <div class="form-group">
-            <input type="text" placeholder="Enter Game Code" id="gameCodeInput" />
-            <input type="text" placeholder="Enter your name" id="playerName" />
-          </div>
-          <button type="submit" class="btn btn-success" id="joinGameButton">
-            Join Game
-          </button>
+    <div id="initialScreen">
+      <div class="d-flex flex-column align-items-center justify-content-center h-100">
+        <h1>Multiplayer Snake</h1>
+        <input type="text" placeholder="Enter your name" id="playerNameS" />
+        <button type="submit" class="btn btn-success" id="newGameButton">
+          Create New Game
+        </button>
+        <div>OR</div>
+        <div class="form-group">
+          <input type="text" placeholder="Enter Game Code" id="gameCodeInput" />
+          <input type="text" placeholder="Enter your name" id="playerName" />
         </div>
+        <button type="submit" class="btn btn-success" id="joinGameButton">
+          Join Game
+        </button>
       </div>
+    </div>
 
-      <div id="gameScreen" class="h-100">
-        <div class="background" id="body">
-          <h1>Your game code is: <span id="gameCodeDisplay"></span></h1>
+    <div class="background" id="gameScreen">
+      
+      
+      
+      
+      <a id="how" href="https://www.youtube.com/watch?v=1Yqj76Q4jJ4">
+        <h3>How To Play?</h3>
+      </a>
+      <div id="refresh" class="">
+        <!-- <img src="r.png" alt="" height="47" width="57"> -->
+        
+      </div>
+      <h1 class="gameCodeDispla">Your game code is: <span id="gameCodeDisplay"></span></h1>
 
+      <div class="form-btns">
+        <div class="score">
+          <h1 id="score">100</h1>
+        </div>
+        <div class="main-btns" id="overlay">
+          <!-- <h1 id="level-title">Click anywhere to Start</h1> -->
+          <div class="container margin">
+            <div class="row">
 
+              <div type="button" id="green" class=" btn  button   green   ">
 
+              </div>
 
-          <a id="how" href="https://www.youtube.com/watch?v=1Yqj76Q4jJ4">
-            <h3>How To Play?</h3>
-          </a>
-          <div id="refresh" class="">
-            <!-- <img src="r.png" alt="" height="47" width="57"> -->
-
-          </div>
-
-          <div class="form-btns">
-            <div class="score">
-              <h1 id="score">100</h1>
-            </div>
-            <div class="main-btns" id="overlay">
-              <h1 id="level-title">Click anywhere to Start</h1>
-              <div class="container margin">
-                <div lass="row">
-
-                  <div type="button" id="green" class=" btn  button   green   ">
-
-                  </div>
-
-                  <div type="button" id="red" class=" btn    button red">
-
-                  </div>
-                </div>
-
-                <div class="row">
-
-                  <div type="button" id="yellow" class="btn yellow    button   ">
-
-                  </div>
-                  <div type="button" id="blue" class=" btn blue  button ">
-
-                  </div>
-
-                </div>
+              <div type="button" id="red" class=" btn    button red">
 
               </div>
             </div>
 
+            <div class="row">
 
-            <div class="form-wrapper">
-              <div id="message-container">
+              <div type="button" id="yellow" class="btn yellow    button   ">
+
               </div>
-              <form id="send-container">
-                <input type="text" id="message-input">
-                <button type="submit" id="send-button">Send</button>
-              </form>
-            </div>
-          </div>
+              <div type="button" id="blue" class=" btn blue  button ">
 
+              </div>
+
+            </div>
+
+          </div>
+        </div>
+
+
+        <div class="form-wrapper">
+          <div id="message-container">
+          </div>
+          <form id="send-container">
+            <input type="text" id="message-input"  class="p-10">
+            <button type="submit" id="send-button" class="p-10">Send</button>
+          </form>
         </div>
       </div>
+
 
     </div>
-  </section>
+
+</div>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js"></script>
   <script src="index.js"></script>
