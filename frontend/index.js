@@ -2,7 +2,7 @@ const BG_COLOUR = '#231f20';
 const SNAKE_COLOUR = '#c2c2c2';
 const FOOD_COLOUR = '#e66916';
 
-const socket = io('http://localhost:3000/');
+const socket = io('https://multiplayer-socket.onrender.com/');
 let roomName;
 
 socket.on('init', handleInit);
