@@ -139,6 +139,10 @@
       .p-10{
         padding:10px
       }
+      .p-30{
+        padding:30px;
+        font-size:30px
+      }
       #send-container{
         margin-top: 30px;
       }
@@ -149,18 +153,21 @@
   <div>
 
     <div id="initialScreen">
-      <div class="d-flex flex-column align-items-center justify-content-center h-100">
+      <div style="
+      font-size: 53px;
+      margin-top: 350px;
+    ">
         <h1>Multiplayer Snake</h1>
-        <input type="text" placeholder="Enter your name" id="playerNameS" />
-        <button type="submit" class="btn btn-success" id="newGameButton">
+        <input class="p-30" type="text" placeholder="Enter your name" id="playerNameS" />
+        <button class="p-30" type="submit" class="" id="newGameButton">
           Create New Game
         </button>
         <div>OR</div>
-        <div class="form-group">
-          <input type="text" placeholder="Enter Game Code" id="gameCodeInput" />
-          <input type="text" placeholder="Enter your name" id="playerName" />
+        <div class="">
+          <input class="p-30" type="text" placeholder="Enter Game Code" id="gameCodeInput" />
+          <input class="p-30" type="text" placeholder="Enter your name" id="playerName" />
         </div>
-        <button type="submit" class="btn btn-success" id="joinGameButton">
+        <button class="p-30" type="submit" class="" id="joinGameButton">
           Join Game
         </button>
       </div>

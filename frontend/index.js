@@ -203,6 +203,8 @@ function handleGameCode(gameCode, userCode) {
   // console.log('gameCode', gameCode, 'userCode', userCode)
   roomName = gameCode
   userId = userCode
+  
+  appendMessage('You: Connected')
   gameCodeDisplay.innerText = gameCode;
 }
 //functions functions functions functions functions functions functions functions functions functions functions functions 
