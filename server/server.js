@@ -5,98 +5,73 @@ const { makeid } = require('./utils');
 
 const state = {};
 const clientRooms = {};
-
+const rooms = {};
 io.on('connection', client => {
 
-  client.on('keydown', handleKeydown);
   client.on('newGame', handleNewGame);
   client.on('joinGame', handleJoinGame);
+  client.on('send-chat-message', (room, message) => {
+    console.log(room, 'room name')
+    client.to(room).broadcast.emit('chat-message', { message: message, name: rooms[room].users[client.id] })
+  })
 
-  function handleJoinGame(roomName) {
-    const room = io.sockets.adapter.rooms[roomName];
 
-    let allUsers;
-    if (room) {
-      allUsers = room.sockets;
-    }
 
-    let numClients = 0;
-    if (allUsers) {
-      numClients = Object.keys(allUsers).length;
-    }
-
-    if (numClients === 0) {
-      client.emit('unknownCode');
-      return;
-    } else if (numClients > 1) {
-      client.emit('tooManyPlayers');
-      return;
-    }
-
-    clientRooms[client.id] = roomName;
-
-    client.join(roomName);
-    client.number = 2;
-    client.emit('init', 2);
+  function handleJoinGame(room, name) {
+    const roo1m = io.sockets.adapter.rooms[room];
+    // console.log(roo1m)
+    const numberOfUsers = roo1m ? roo1m.length : 0;
+    console.log(room, '22')
+    console.log(rooms[room], 'room-name 23')
+    client.join(room)
+    console.log(rooms)
+    rooms[room].users[client.id] = name
+    // console.log(rooms)
+    // console.log(`Users in room ${roo1m}: ${numberOfUsers}`);
+    console.log(rooms)
     
-    startGameInterval(roomName);
+    client.emit('gameCode', room, numberOfUsers+1);
+    client.to(room).broadcast.emit('user-connected', name, numberOfUsers, client.id, room)
   }
 
-  function handleNewGame() {
+  function handleNewGame(playerName) {
+    console.log('hit')
     let roomName = makeid(5);
-    clientRooms[client.id] = roomName;
-    client.emit('gameCode', roomName);
+    // if (rooms[roomName] != null) {
+    //     return res.redirect('/')
+    // }
+    rooms[roomName] = { users: {}, sequence: [] }
+    // Send message that new room was created
 
-    state[roomName] = initGame();
+    
 
-    client.join(roomName);
-    client.number = 1;
-    client.emit('init', 1);
+    const roo1m = io.sockets.adapter.rooms[roomName];
+    // console.log(roo1m)
+    const numberOfUsers = roo1m ? roo1m.length : 0;
+    console.log(numberOfUsers, 'numberOFuser')
+    client.emit('gameCode', roomName, numberOfUsers+1);
+
+    // client.emit('userId', roomName);
+    addNewUser(roomName, playerName, client)
   }
 
-  function handleKeydown(keyCode) {
-    const roomName = clientRooms[client.id];
-    if (!roomName) {
-      return;
-    }
-    try {
-      keyCode = parseInt(keyCode);
-    } catch(e) {
-      console.error(e);
-      return;
-    }
-
-    const vel = getUpdatedVelocity(keyCode);
-
-    if (vel) {
-      state[roomName].players[client.number - 1].vel = vel;
-    }
-  }
 });
 
-function startGameInterval(roomName) {
-  const intervalId = setInterval(() => {
-    const winner = gameLoop(state[roomName]);
-    
-    if (!winner) {
-      emitGameState(roomName, state[roomName])
-    } else {
-      emitGameOver(roomName, winner);
-      state[roomName] = null;
-      clearInterval(intervalId);
-    }
-  }, 1000 / FRAME_RATE);
+
+const addNewUser = (room, name, client) => {
+  client.join(room)
+  rooms[room].users[client.id] = name
+  // console.log(rooms)
+  // console.log(`Users in room ${roo1m}: ${numberOfUsers}`);
+  client.to(room).broadcast.emit('user-connected', name)
 }
 
-function emitGameState(room, gameState) {
-  // Send this event to everyone in the room.
-  io.sockets.in(room)
-    .emit('gameState', JSON.stringify(gameState));
-}
 
-function emitGameOver(room, winner) {
-  io.sockets.in(room)
-    .emit('gameOver', JSON.stringify({ winner }));
-}
+
+
+
+
+
+
 
 io.listen(process.env.PORT || 3000);
