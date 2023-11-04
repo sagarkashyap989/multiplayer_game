@@ -2,7 +2,8 @@ const BG_COLOUR = '#231f20';
 const SNAKE_COLOUR = '#c2c2c2';
 const FOOD_COLOUR = '#e66916';
 
-const socket = io('https://multiplayer-socket.onrender.com/');
+// const socket = io('https://multiplayer-socket.onrender.com/');
+const socket = io('http://localhost:3000/');
 let roomName;
 
 socket.on('init', handleInit);
@@ -31,6 +32,7 @@ const messageInput = document.getElementById('message-input')
 
 const viewScore = document.getElementById('score')
 
+const sounds  = [new Audio('red.mp3'), new Audio('green.mp3'), new Audio('yellow.mp3'), new Audio('blue.mp3'),  new Audio('wrong.mp3')]
 
 let userId;
 let seq = [3]
@@ -235,7 +237,7 @@ socket.on('you-win', data => {
 
 socket.on('seq-added', data => {
 
-  playSound(colors[data[data.length - 1]])
+  playSound(sounds[data[data.length - 1]])
   seq = [3, ...data]
   if (seq.length % 2 + 1 != Number(userId)) {
 
@@ -256,7 +258,6 @@ socket.on('seq-added', data => {
 
 
 const colors = ['red', 'green', 'yellow', 'blue'];
-
 colors.forEach(color => {
   const element = document.getElementById(color);
   element.addEventListener('click', () => {
@@ -273,7 +274,7 @@ colors.forEach(color => {
     userClickedPattern.push(colors.indexOf(color));
     // console.log(userClickedPattern, 'this is userClickedPattern')
     // console.log(seq, 'this is seq')
-    playSound(color);
+    playSound(sounds[colors.indexOf(color)]);
 
     console.log(userClickedPattern.length, seq.length,userClickedPattern.length > seq.length, 'userClickedPattern.length > seq.length')
 
@@ -296,8 +297,7 @@ colors.forEach(color => {
 });
 
 function playSound(name) {
-  const audio = new Audio(name + '.mp3');
-  audio.play();
+  name.play();
 }
 
 
@@ -317,7 +317,7 @@ function checkAnswer(currentLevel) {
     // fail
 
     socket.emit('del-seq', roomName)
-    playSound("wrong");
+    playSound(sounds[4]);
 
     socket.emit('won-lost', roomName, userId)
     appendMessage('you: lost', 'lost-title  ')
