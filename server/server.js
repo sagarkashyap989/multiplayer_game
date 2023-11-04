@@ -67,6 +67,7 @@ io.on('connection', client => {
     console.log(rooms[room], 'room-name 23')
     client.join(room)
     console.log(rooms)
+    
     rooms[room].users[client.id] = name
     // console.log(rooms)
     // console.log(`Users in room ${roo1m}: ${numberOfUsers}`);
@@ -84,7 +85,7 @@ io.on('connection', client => {
     // }
     rooms[roomName] = { users: {}, sequence: [] }
     // Send message that new room was created
-
+    console.log(rooms)
     
 
     const roo1m = io.sockets.adapter.rooms[roomName];

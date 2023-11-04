@@ -209,6 +209,26 @@ function handleGameCode(gameCode, userCode) {
   appendMessage('You: Connected')
   gameCodeDisplay.innerText = gameCode;
 }
+
+
+
+
+function animatePress(currentColor){
+
+  const target =  document.getElementById(`${currentColor}`)
+  console.log(target)
+  // $("."+currentColor).addClass("pressed");
+  // alert(currentColor)
+  target.classList.add('pressed')
+setTimeout(function (){
+  // $("."+currentColor).removeClass("pressed");
+  target.classList.remove('pressed')
+  }, 100);
+
+}
+
+
+
 //functions functions functions functions functions functions functions functions functions functions functions functions 
 
 
@@ -237,6 +257,7 @@ socket.on('you-win', data => {
 
 socket.on('seq-added', data => {
 
+  animatePress(colors[data[data.length - 1]])
   playSound(sounds[data[data.length - 1]])
   seq = [3, ...data]
   if (seq.length % 2 + 1 != Number(userId)) {
@@ -274,6 +295,7 @@ colors.forEach(color => {
     userClickedPattern.push(colors.indexOf(color));
     // console.log(userClickedPattern, 'this is userClickedPattern')
     // console.log(seq, 'this is seq')
+    animatePress(color)
     playSound(sounds[colors.indexOf(color)]);
 
     console.log(userClickedPattern.length, seq.length,userClickedPattern.length > seq.length, 'userClickedPattern.length > seq.length')
