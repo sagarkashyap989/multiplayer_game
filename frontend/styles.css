@@ -580,3 +580,7 @@ HTML CSSResult Skip Results Iframe
 .lost-title{
   color:red
 }
+
+* {
+    touch-action: manipulation;
+}
